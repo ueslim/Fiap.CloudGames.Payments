@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "uf6xr34VdZapFho7asD2W/PR9cU2cvULRlwfi9ciQz8=",
+  "Source": "FIAP.CloudGames.Payment.API",
+  "BasePath": "_content/FIAP.CloudGames.Payment.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
