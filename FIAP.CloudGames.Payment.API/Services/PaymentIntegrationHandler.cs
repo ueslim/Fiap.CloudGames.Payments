@@ -21,7 +21,7 @@ namespace FIAP.CloudGames.Payment.API.Services
 
         private void SetSubscribers()
         {
-            _bus.SubscribeAsync<OrderStartedIntegrationEvent>("payment-started",async message => { await AuthorizePayment(message); });
+            _bus.SubscribeAsync<OrderStartedIntegrationEvent>("OrderStartedIntegrationEvent", async message => { await AuthorizePayment(message); });
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)

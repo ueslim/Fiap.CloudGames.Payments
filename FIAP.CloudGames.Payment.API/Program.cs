@@ -6,7 +6,7 @@ LoggingConfig.ConfigureBootstrapLogger();
 var builder = WebApplication.CreateBuilder(args);
 
 // Serilog + OTLP para logs
-builder.ConfigureSerilogWithOpenTelemetry("cart-api");
+builder.ConfigureSerilogWithOpenTelemetry("payment-api");
 
 if (builder.Environment.IsDevelopment())
 {

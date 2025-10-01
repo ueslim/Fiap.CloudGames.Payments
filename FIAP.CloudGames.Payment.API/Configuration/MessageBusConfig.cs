@@ -10,7 +10,8 @@ namespace FIAP.CloudGames.Payment.API.Configuration
             IConfiguration configuration)
         {
             services.AddMessageBus(configuration.GetMessageQueueConnection("MessageBus"))
-                .AddHostedService<PaymentIntegrationHandler>();
+                .AddHostedService<PaymentIntegrationHandler>()
+                .AddHostedService<FakeOrderIntegrationHandler>();
         }
     }
 }
