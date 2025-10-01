@@ -18,7 +18,7 @@ namespace FIAP.CloudGames.Payment.Infra.Data
             var config = builder.Build();
 
             var cs = config.GetConnectionString("DefaultConnection")
-                     ?? "Server=(localdb)\\mssqllocaldb;Database=CloudGames_Cart;Trusted_Connection=True;TrustServerCertificate=True";
+                     ?? "Server=(localdb)\\mssqllocaldb;Database=FIAPCloudGames_Payment;Trusted_Connection=True;TrustServerCertificate=True";
 
             var options = new DbContextOptionsBuilder<PaymentContext>()
                 .UseSqlServer(cs, sql => sql.MigrationsHistoryTable("__EFMigrationsHistory_Payment", "dbo"))

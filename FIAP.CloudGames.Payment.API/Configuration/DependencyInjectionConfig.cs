@@ -1,8 +1,12 @@
-﻿using FIAP.CloudGames.Payment.API.Facade;
+﻿using FIAP.CloudGames.Core.Events;
+using FIAP.CloudGames.Core.Mediator;
+using FIAP.CloudGames.Payment.API.Facade;
 using FIAP.CloudGames.Payment.API.Services;
 using FIAP.CloudGames.Payment.Domain.Models;
 using FIAP.CloudGames.Payment.Infra.Data;
+using FIAP.CloudGames.Payment.Infra.Data.EventSourcing;
 using FIAP.CloudGames.Payment.Infra.Data.Repository;
+using FIAP.CloudGames.Payment.Infra.Data.Repository.EventSourcing;
 using FIAP.CloudGames.WebAPI.Core.User;
 
 namespace FIAP.CloudGames.Payment.API.Configuration
@@ -19,6 +23,11 @@ namespace FIAP.CloudGames.Payment.API.Configuration
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<PaymentContext>();
+
+            services.AddScoped<IEventStore, SqlEventStore>();
+            services.AddScoped<IEventStoreRepository, EventStoreSqlRepository>();
+            
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
         }
     }
 }

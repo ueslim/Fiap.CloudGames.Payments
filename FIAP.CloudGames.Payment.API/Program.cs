@@ -19,6 +19,11 @@ builder.Services.AddMessageBusConfiguration(builder.Configuration);
 
 builder.Services.AddJwtConfiguration(builder.Configuration);
 
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
+
 builder.Services.AddSwaggerConfiguration();
 
 builder.Services.RegisterServices();

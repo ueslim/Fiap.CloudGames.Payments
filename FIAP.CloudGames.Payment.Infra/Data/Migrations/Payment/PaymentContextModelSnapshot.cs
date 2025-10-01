@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FIAP.CloudGames.Payment.Infra.Migrations
+namespace FIAP.CloudGames.Payment.Infra.Data.Migrations.Payment
 {
     [DbContext(typeof(PaymentContext))]
     partial class PaymentContextModelSnapshot : ModelSnapshot

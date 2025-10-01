@@ -1,4 +1,5 @@
 ﻿using FIAP.CloudGames.Core.Data;
+using FIAP.CloudGames.Core.Events;
 using FIAP.CloudGames.Core.Messages;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace FIAP.CloudGames.Payment.Infra.Data
             modelBuilder.HasDefaultSchema("payment");
             modelBuilder.Ignore<ValidationResult>();
             modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<StoredEvent>();
 
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
                 e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
@@ -31,7 +33,8 @@ namespace FIAP.CloudGames.Payment.Infra.Data
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaymentContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaymentContext).Assembly, t => t.Namespace != null && !t.Namespace.Contains("EventSourcing"));
+
         }
 
         public async Task<bool> Commit()

@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FIAP.CloudGames.Payment.Infra.Migrations
+namespace FIAP.CloudGames.Payment.Infra.Data.Migrations.Payment
 {
     [DbContext(typeof(PaymentContext))]
-    [Migration("20251001143028_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20251001145711_InitialPaymentMigration")]
+    partial class InitialPaymentMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -60,5 +60,21 @@ namespace FIAP.CloudGames.Payment.API.Controllers
                 Payment = PaymentTestDataGenerator.MapPayment(payment)
             });
         }
+
+        [AllowAnonymous]
+        [HttpPost("payments/{orderId:guid}/capture")]
+        public async Task<IActionResult> Capture(Guid orderId)
+        {
+            var resp = await _paymentService.CapturePayment(orderId);
+            return CustomResponse(resp);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("payments/{orderId:guid}/cancel")]
+        public async Task<IActionResult> Cancel(Guid orderId)
+        {
+            var resp = await _paymentService.CancelPayment(orderId);
+            return CustomResponse(resp);
+        }
     }
 }

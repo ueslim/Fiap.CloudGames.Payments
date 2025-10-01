@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace FIAP.CloudGames.Payment.Infra.Migrations
+namespace FIAP.CloudGames.Payment.Infra.Data.Migrations.Payment
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialPaymentMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
