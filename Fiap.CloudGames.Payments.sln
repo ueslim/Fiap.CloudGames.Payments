@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIAP.CloudGames.MessageBus"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIAP.CloudGames.FakePayment", "FIAP.CloudGames.FakePayment\FIAP.CloudGames.FakePayment.csproj", "{30126E0C-5B00-E01E-87EC-E090EC8CDDAD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CFB3DAA7-F5F5-1ED5-F237-3901736F47F5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{2677A265-6FCF-1A8E-4D7D-82148D08C400} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{BAB45854-E027-8780-D258-C0698F5C7B0B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E2B60F69-AA6E-42CA-B8D8-F35A30157A64}

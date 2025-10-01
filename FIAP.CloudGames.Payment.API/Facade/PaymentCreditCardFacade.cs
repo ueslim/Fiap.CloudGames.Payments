@@ -14,8 +14,7 @@ namespace FIAP.CloudGames.Payment.API.Facade
 
         public async Task<Models.Transaction> AuthorizePayment(Models.Payment payment)
         {
-            var fakePaymentService = new FakePaymentService(_paymentConfig.DefaultApiKey,
-                _paymentConfig.DefaultEncryptionKey);
+            var fakePaymentService = new FakePaymentService(_paymentConfig.DefaultApiKey, _paymentConfig.DefaultEncryptionKey);
 
             var cardHashGen = new CardHash(fakePaymentService)
             {

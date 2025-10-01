@@ -67,8 +67,7 @@ namespace FIAP.CloudGames.MessageBus
       where TResponse : ResponseMessage
         {
             TryConnect();
-            // RespondAsync retorna AwaitableDisposable<IDisposable>
-            // pegamos o IDisposable resultante de forma síncrona
+         
             var registration = _bus.Rpc.RespondAsync<TRequest, TResponse>(req =>
                 Task.FromResult(responder(req)));
 
@@ -89,10 +88,7 @@ namespace FIAP.CloudGames.MessageBus
         {
             if (_bus != null && _bus.Advanced.IsConnected) return;
 
-            // v7 continua suportando RabbitHutch.CreateBus(connectionString)
             _bus = RabbitHutch.CreateBus(_connectionString);
-            // Em v7 o EasyNetQ já cuida de reconexão; você pode,
-            // se quiser, observar eventos em _bus.Advanced.Connected/Disconnected.
         }
 
         public void Dispose()

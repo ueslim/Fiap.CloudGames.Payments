@@ -15,6 +15,21 @@ namespace FIAP.CloudGames.Payment.API.Data.Repository
 
         public IUnitOfWork UnitOfWork => _context;
 
+        public async Task<IEnumerable<Models.Payment>> GetAll()
+        {
+            return await _context.Payments.Include(x=> x.Transactions).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<Models.Payment> GetPaymentByOrderId(Guid orderId)
+        {
+            return await _context.Payments.AsNoTracking().FirstOrDefaultAsync(p => p.OrderId == orderId);
+        }
+
+        public async Task<IEnumerable<Transaction>> GetTransactionsByOrderId(Guid orderId)
+        {
+            return await _context.Transactions.AsNoTracking().Where(t => t.Payment.OrderId == orderId).ToListAsync();
+        }
+
         public void AddPayment(Models.Payment payment)
         {
             _context.Payments.Add(payment);
@@ -23,18 +38,6 @@ namespace FIAP.CloudGames.Payment.API.Data.Repository
         public void AddTransaction(Transaction transaction)
         {
             _context.Transactions.Add(transaction);
-        }
-
-        public async Task<Models.Payment> GetPaymentByOrderId(Guid orderId)
-        {
-            return await _context.Payments.AsNoTracking()
-                .FirstOrDefaultAsync(p => p.OrderId == orderId);
-        }
-
-        public async Task<IEnumerable<Transaction>> GetTransactionsByOrderId(Guid orderId)
-        {
-            return await _context.Transactions.AsNoTracking()
-                .Where(t => t.Payment.OrderId == orderId).ToListAsync();
         }
 
         public void Dispose()
