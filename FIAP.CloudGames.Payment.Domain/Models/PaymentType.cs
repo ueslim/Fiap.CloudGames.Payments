@@ -1,4 +1,4 @@
-﻿namespace FIAP.CloudGames.Payment.API.Models
+﻿namespace FIAP.CloudGames.Payment.Domain.Models
 {
     public enum PaymentType
     {

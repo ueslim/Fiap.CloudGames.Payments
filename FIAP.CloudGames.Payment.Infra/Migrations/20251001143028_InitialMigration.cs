@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace FIAP.CloudGames.Payment.API.Data.Migrations
+namespace FIAP.CloudGames.Payment.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class Init_Payment : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

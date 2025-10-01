@@ -1,6 +1,6 @@
 ﻿using FIAP.CloudGames.Core.DomainObjects;
 
-namespace FIAP.CloudGames.Payment.API.Models
+namespace FIAP.CloudGames.Payment.Domain.Models
 {
     public class Payment : Entity, IAggregateRoot
     {

@@ -1,10 +1,10 @@
-﻿using FIAP.CloudGames.Payment.API.Models;
+﻿using FIAP.CloudGames.Payment.Domain.Models;
 
 namespace FIAP.CloudGames.Payment.API.Facade
 {
     public interface IPaymentFacade
     {
-        Task<Transaction> AuthorizePayment(Models.Payment payment);
+        Task<Transaction> AuthorizePayment(Domain.Models.Payment payment);
 
         Task<Transaction> CapturePayment(Transaction transaction);
 

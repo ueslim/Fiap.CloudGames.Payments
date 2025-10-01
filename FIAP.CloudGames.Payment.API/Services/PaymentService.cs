@@ -1,9 +1,7 @@
-﻿using EasyNetQ;
-using FIAP.CloudGames.Core.DomainObjects;
-using FIAP.CloudGames.Core.Messages.Integration;
+﻿using FIAP.CloudGames.Core.Messages.Integration;
 using FIAP.CloudGames.MessageBus;
 using FIAP.CloudGames.Payment.API.Facade;
-using FIAP.CloudGames.Payment.API.Models;
+using FIAP.CloudGames.Payment.Domain.Models;
 using FluentValidation.Results;
 
 namespace FIAP.CloudGames.Payment.API.Services
@@ -23,7 +21,7 @@ namespace FIAP.CloudGames.Payment.API.Services
             _bus = bus;
         }
 
-        public async Task<ResponseMessage> AuthorizePayment(Models.Payment payment)
+        public async Task<ResponseMessage> AuthorizePayment(Domain.Models.Payment payment)
         {
             var transaction = await _paymentFacade.AuthorizePayment(payment);
 

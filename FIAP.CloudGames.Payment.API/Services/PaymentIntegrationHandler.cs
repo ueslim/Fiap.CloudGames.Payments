@@ -1,6 +1,6 @@
 ﻿using FIAP.CloudGames.Core.Messages.Integration;
 using FIAP.CloudGames.MessageBus;
-using FIAP.CloudGames.Payment.API.Models;
+using FIAP.CloudGames.Payment.Domain.Models;
 
 namespace FIAP.CloudGames.Payment.API.Services
 {
@@ -36,7 +36,7 @@ namespace FIAP.CloudGames.Payment.API.Services
             using var scope = _serviceProvider.CreateScope();
             var paymentService = scope.ServiceProvider.GetRequiredService<IPaymentService>();
 
-            var payment = new Models.Payment
+            var payment = new Domain.Models.Payment
             {
                 OrderId = message.OrderId,
                 PaymentType = (PaymentType)message.PaymentType,

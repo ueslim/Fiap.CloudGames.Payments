@@ -1,5 +1,5 @@
-﻿using FIAP.CloudGames.Payment.API.Data;
-using FIAP.CloudGames.Payment.API.Facade;
+﻿using FIAP.CloudGames.Payment.API.Facade;
+using FIAP.CloudGames.Payment.Infra.Data;
 using FIAP.CloudGames.WebAPI.Core.Identity;
 using Microsoft.EntityFrameworkCore;
 

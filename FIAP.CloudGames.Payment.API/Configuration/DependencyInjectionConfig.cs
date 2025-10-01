@@ -1,8 +1,8 @@
-﻿using FIAP.CloudGames.Payment.API.Data;
-using FIAP.CloudGames.Payment.API.Data.Repository;
-using FIAP.CloudGames.Payment.API.Facade;
-using FIAP.CloudGames.Payment.API.Models;
+﻿using FIAP.CloudGames.Payment.API.Facade;
 using FIAP.CloudGames.Payment.API.Services;
+using FIAP.CloudGames.Payment.Domain.Models;
+using FIAP.CloudGames.Payment.Infra.Data;
+using FIAP.CloudGames.Payment.Infra.Data.Repository;
 using FIAP.CloudGames.WebAPI.Core.User;
 
 namespace FIAP.CloudGames.Payment.API.Configuration

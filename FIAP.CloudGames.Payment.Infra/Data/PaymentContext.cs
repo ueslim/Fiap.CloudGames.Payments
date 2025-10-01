@@ -1,10 +1,10 @@
 ﻿using FIAP.CloudGames.Core.Data;
 using FIAP.CloudGames.Core.Messages;
-using FIAP.CloudGames.Payment.API.Models;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
+using Models = FIAP.CloudGames.Payment.Domain.Models;
 
-namespace FIAP.CloudGames.Payment.API.Data
+namespace FIAP.CloudGames.Payment.Infra.Data
 {
     public sealed class PaymentContext : DbContext, IUnitOfWork
     {
@@ -16,7 +16,7 @@ namespace FIAP.CloudGames.Payment.API.Data
         }
 
         public DbSet<Models.Payment> Payments { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Models.Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

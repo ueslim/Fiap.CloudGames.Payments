@@ -1,8 +1,8 @@
 ﻿using FIAP.CloudGames.Core.Messages.Integration;
 using FIAP.CloudGames.MessageBus;
-using FIAP.CloudGames.Payment.API.Models;
 using FIAP.CloudGames.Payment.API.Services;
 using FIAP.CloudGames.Payment.API.Utils;
+using FIAP.CloudGames.Payment.Domain.Models;
 using FIAP.CloudGames.WebAPI.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

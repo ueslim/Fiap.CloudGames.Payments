@@ -1,4 +1,4 @@
-﻿using FIAP.CloudGames.Payment.API.Models;
+﻿using FIAP.CloudGames.Payment.Domain.Models;
 
 namespace FIAP.CloudGames.Payment.API.Utils
 {
@@ -11,9 +11,9 @@ namespace FIAP.CloudGames.Payment.API.Utils
             return string.Join("", Enumerable.Range(0, length).Select(_ => _random.Next(0, 10)));
         }
 
-        public static Models.Payment GenerateRandomPayment()
+        public static Domain.Models.Payment GenerateRandomPayment()
         {
-            return new Models.Payment
+            return new Domain.Models.Payment
             {
                 OrderId = Guid.NewGuid(),
                 Value = _random.Next(50, 500),
@@ -39,7 +39,7 @@ namespace FIAP.CloudGames.Payment.API.Utils
              Status: t.Status.ToString()
          );
 
-        public static PaymentDto MapPayment(Models.Payment p) => new PaymentDto(
+        public static PaymentDto MapPayment(Domain.Models.Payment p) => new PaymentDto(
                 OrderId: p.OrderId,
                 Value: p.Value,
                 Transactions: (p.Transactions ?? Enumerable.Empty<Transaction>()).Select(MapTransaction)

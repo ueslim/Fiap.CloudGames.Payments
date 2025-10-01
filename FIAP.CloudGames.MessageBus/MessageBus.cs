@@ -67,7 +67,7 @@ namespace FIAP.CloudGames.MessageBus
       where TResponse : ResponseMessage
         {
             TryConnect();
-         
+
             var registration = _bus.Rpc.RespondAsync<TRequest, TResponse>(req =>
                 Task.FromResult(responder(req)));
 

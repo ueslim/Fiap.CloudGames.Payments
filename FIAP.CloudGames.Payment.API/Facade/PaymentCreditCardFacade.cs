@@ -1,5 +1,6 @@
 ﻿using FIAP.CloudGames.FakePayment;
 using Microsoft.Extensions.Options;
+using Models = FIAP.CloudGames.Payment.Domain.Models;
 
 namespace FIAP.CloudGames.Payment.API.Facade
 {

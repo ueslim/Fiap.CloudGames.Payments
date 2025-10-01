@@ -35,5 +35,4 @@ app.UseApiConfiguration(app.Environment);
 // Logs enriquecidos com user_id
 app.UseRequestLogEnrichment();
 
-
 app.Run();

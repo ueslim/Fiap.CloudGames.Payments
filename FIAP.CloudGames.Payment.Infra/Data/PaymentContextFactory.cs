@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
-namespace FIAP.CloudGames.Payment.API.Data
+namespace FIAP.CloudGames.Payment.Infra.Data
 {
     public class PaymentContextFactory : IDesignTimeDbContextFactory<PaymentContext>
     {

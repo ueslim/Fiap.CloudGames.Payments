@@ -1,8 +1,10 @@
 ﻿using FIAP.CloudGames.Core.Data;
-using FIAP.CloudGames.Payment.API.Models;
+using FIAP.CloudGames.Payment.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace FIAP.CloudGames.Payment.API.Data.Repository
+using Models = FIAP.CloudGames.Payment.Domain.Models;
+
+namespace FIAP.CloudGames.Payment.Infra.Data.Repository
 {
     public class PaymentRepository : IPaymentRepository
     {
@@ -17,7 +19,7 @@ namespace FIAP.CloudGames.Payment.API.Data.Repository
 
         public async Task<IEnumerable<Models.Payment>> GetAll()
         {
-            return await _context.Payments.Include(x=> x.Transactions).AsNoTracking().ToListAsync();
+            return await _context.Payments.Include(x => x.Transactions).AsNoTracking().ToListAsync();
         }
 
         public async Task<Models.Payment> GetPaymentByOrderId(Guid orderId)
@@ -25,7 +27,7 @@ namespace FIAP.CloudGames.Payment.API.Data.Repository
             return await _context.Payments.AsNoTracking().FirstOrDefaultAsync(p => p.OrderId == orderId);
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactionsByOrderId(Guid orderId)
+        public async Task<IEnumerable<Domain.Models.Transaction>> GetTransactionsByOrderId(Guid orderId)
         {
             return await _context.Transactions.AsNoTracking().Where(t => t.Payment.OrderId == orderId).ToListAsync();
         }
@@ -35,7 +37,7 @@ namespace FIAP.CloudGames.Payment.API.Data.Repository
             _context.Payments.Add(payment);
         }
 
-        public void AddTransaction(Transaction transaction)
+        public void AddTransaction(Models.Transaction transaction)
         {
             _context.Transactions.Add(transaction);
         }

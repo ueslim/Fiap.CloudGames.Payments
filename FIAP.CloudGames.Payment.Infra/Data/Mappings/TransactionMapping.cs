@@ -1,12 +1,11 @@
-﻿using FIAP.CloudGames.Payment.API.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FIAP.CloudGames.Payment.API.Data.Mappings
+namespace FIAP.CloudGames.Payment.Infra.Data.Mappings
 {
-    public class TransacaoMapping : IEntityTypeConfiguration<Transaction>
+    public class TransacaoMapping : IEntityTypeConfiguration<Domain.Models.Transaction>
     {
-        public void Configure(EntityTypeBuilder<Transaction> builder)
+        public void Configure(EntityTypeBuilder<Domain.Models.Transaction> builder)
         {
             builder.HasKey(c => c.Id);
 
