@@ -1,9 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using OpenTelemetry.Instrumentation.AspNetCore;
+using OpenTelemetry.Instrumentation.Http;
 
 namespace FIAP.CloudGames.Core.Observability;
 
@@ -16,29 +19,73 @@ public static class ObservabilityConfig
         var metricsEndpoint = $"{baseEndpoint.TrimEnd('/')}/v1/metrics";
 
         services.AddOpenTelemetry()
-            .ConfigureResource(r => r
+                .ConfigureResource(r => r
                 .AddService(serviceName)
                 .AddAttributes(new[]
                 {
-                     new KeyValuePair<string, object>("deployment.environment", config["ASPNETCORE_ENVIRONMENT"] ?? "Development"),
-                     new KeyValuePair<string, object>("service.instance.id", Environment.MachineName)
+                    new KeyValuePair<string, object>("deployment.environment", config["ASPNETCORE_ENVIRONMENT"] ?? "Development"),
+                    new KeyValuePair<string, object>("service.instance.id", Environment.MachineName)
                 }))
-            .WithTracing(t => t
-                .AddAspNetCoreInstrumentation(o => o.RecordException = true)
-                .AddHttpClientInstrumentation(o => o.RecordException = true)
+                .WithTracing(t => t
+                // ASP.NET Core (enriquece com correlation_id do header)
+                .AddAspNetCoreInstrumentation(o =>
+                {
+                    o.RecordException = true;
+
+                    o.EnrichWithHttpRequest = (activity, request) =>
+                    {
+                        if (request.Headers.TryGetValue("X-Correlation-Id", out var cid) && !string.IsNullOrWhiteSpace(cid))
+                            activity.SetTag("correlation_id", cid.ToString());
+                        else if (!string.IsNullOrEmpty(request.HttpContext.TraceIdentifier))
+                            activity.SetTag("correlation_id", request.HttpContext.TraceIdentifier);
+                    };
+
+                    o.EnrichWithHttpResponse = (activity, response) =>
+                    {
+                        if (response.Headers.TryGetValue("X-Correlation-Id", out var cid) && !string.IsNullOrWhiteSpace(cid))
+                            activity.SetTag("correlation_id", cid.ToString());
+                    };
+                })
+                // HttpClient (propaga correlation_id do Activity atual)
+                .AddHttpClientInstrumentation((HttpClientTraceInstrumentationOptions o) =>
+                {
+                    o.RecordException = true;
+
+                    o.EnrichWithHttpRequestMessage = (activity, request) =>
+                    {
+                        var cid = Activity.Current?.GetTagItem("correlation_id")?.ToString();
+                        if (!string.IsNullOrEmpty(cid)) activity.SetTag("correlation_id", cid);
+                    };
+
+                    o.EnrichWithHttpResponseMessage = (activity, response) =>
+                    {
+                        var cid = Activity.Current?.GetTagItem("correlation_id")?.ToString();
+                        if (!string.IsNullOrEmpty(cid)) activity.SetTag("correlation_id", cid);
+                    };
+
+                    o.EnrichWithException = (activity, ex) =>
+                    {
+                        activity.SetTag("otel.status_code", "ERROR");
+                        activity.SetTag("exception.type", ex.GetType().FullName);
+                        activity.SetTag("exception.message", ex.Message);
+                    };
+                })
+
+                // Exportador OTLP (traces)
                 .AddOtlpExporter(o =>
                 {
-                    o.Protocol = OtlpExportProtocol.HttpProtobuf; // HTTP
-                    o.Endpoint = new Uri(tracesEndpoint);         // .../v1/traces
+                    o.Protocol = OtlpExportProtocol.HttpProtobuf;
+                    o.Endpoint = new Uri(tracesEndpoint);   
                 }))
-            .WithMetrics(m => m
+                .WithMetrics(m => m
                 .AddAspNetCoreInstrumentation()
                 .AddRuntimeInstrumentation()
                 .AddHttpClientInstrumentation()
+                // Exportador OTLP (metrics)
                 .AddOtlpExporter(o =>
                 {
-                    o.Protocol = OtlpExportProtocol.HttpProtobuf; // HTTP
-                    o.Endpoint = new Uri(metricsEndpoint);        // .../v1/metrics
+                    o.Protocol = OtlpExportProtocol.HttpProtobuf;
+                    o.Endpoint = new Uri(metricsEndpoint);
                 }));
 
         return services;

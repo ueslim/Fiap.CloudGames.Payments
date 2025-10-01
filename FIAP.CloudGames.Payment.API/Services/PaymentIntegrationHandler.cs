@@ -1,6 +1,8 @@
 ﻿using FIAP.CloudGames.Core.Messages.Integration;
+using FIAP.CloudGames.Core.Observability;
 using FIAP.CloudGames.MessageBus;
 using FIAP.CloudGames.Payment.Domain.Models;
+using Serilog;
 
 namespace FIAP.CloudGames.Payment.API.Services
 {
@@ -21,7 +23,17 @@ namespace FIAP.CloudGames.Payment.API.Services
 
         private void SetSubscribers()
         {
-            _bus.SubscribeAsync<OrderStartedIntegrationEvent>("OrderStartedIntegrationEvent", async message => { await AuthorizePayment(message); });
+            _bus.SubscribeAsync<OrderStartedIntegrationEvent>("OrderStartedIntegrationEvent", async message =>
+            {
+                var cid = LogHelpers.GetCorrelationId();
+                Log.Information("Integration in: OrderStartedIntegrationEvent orderId={orderId} value={value} correlationId={cid}",
+                    message.OrderId, message.Value, cid);
+
+                await AuthorizePayment(message);
+
+                Log.Information("Integration done: OrderStartedIntegrationEvent orderId={orderId} correlationId={cid}",
+                    message.OrderId, cid);
+            });
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)

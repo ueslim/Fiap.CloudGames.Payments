@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FIAP.CloudGames.Payment.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("eventstore")]
     [Produces("application/json")]

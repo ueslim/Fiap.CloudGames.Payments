@@ -1,6 +1,7 @@
 ﻿using FIAP.CloudGames.Payment.API.Facade;
 using FIAP.CloudGames.Payment.Infra.Data;
 using FIAP.CloudGames.WebAPI.Core.Identity;
+using FIAP.CloudGames.WebAPI.Core.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 namespace FIAP.CloudGames.Payment.API.Configuration
@@ -43,6 +44,8 @@ namespace FIAP.CloudGames.Payment.API.Configuration
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCorrelationId();
 
             app.UseRouting();
 
