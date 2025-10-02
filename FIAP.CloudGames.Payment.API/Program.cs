@@ -1,5 +1,7 @@
 using FIAP.CloudGames.Payment.API.Configuration;
+using FIAP.CloudGames.Payment.Infra.Data;
 using FIAP.CloudGames.WebAPI.Core.Identity;
+using Microsoft.EntityFrameworkCore;
 
 LoggingConfig.ConfigureBootstrapLogger();
 
@@ -32,6 +34,12 @@ builder.Services.RegisterServices();
 builder.Services.AddObservabilityConfiguration(builder.Configuration);
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<PaymentContext>();
+    await context.Database.MigrateAsync();
+}
 
 app.UseSwaggerConfiguration();
 
