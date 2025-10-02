@@ -26,7 +26,7 @@ namespace FIAP.CloudGames.Payment.API.Configuration
 
             services.AddScoped<IEventStore, SqlEventStore>();
             services.AddScoped<IEventStoreRepository, EventStoreSqlRepository>();
-            
+
             services.AddScoped<IMediatorHandler, MediatorHandler>();
         }
     }

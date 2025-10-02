@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using FIAP.CloudGames.Core.Messages.Integration;
+﻿using FIAP.CloudGames.Core.Messages.Integration;
 using FIAP.CloudGames.MessageBus;
 using FIAP.CloudGames.Payment.API.Services;
 using FIAP.CloudGames.Payment.Domain.Models;
-using FluentAssertions;
 using FluentValidation.Results;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;

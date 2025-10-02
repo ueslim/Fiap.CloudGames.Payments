@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Serilog;
+using System.Diagnostics;
 
 namespace FIAP.CloudGames.WebAPI.Core.Middleware
 {

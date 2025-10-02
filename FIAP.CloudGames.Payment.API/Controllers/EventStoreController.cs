@@ -1,10 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using FIAP.CloudGames.Payment.Infra.Data.Repository.EventSourcing;
+﻿using FIAP.CloudGames.Payment.Infra.Data.Repository.EventSourcing;
 using FIAP.CloudGames.Payment.Infra.Eventing;
 using FIAP.CloudGames.WebAPI.Core.Controllers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FIAP.CloudGames.Payment.API.Controllers

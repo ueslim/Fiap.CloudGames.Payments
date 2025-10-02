@@ -34,7 +34,6 @@ namespace FIAP.CloudGames.Payment.Infra.Data
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaymentContext).Assembly, t => t.Namespace != null && !t.Namespace.Contains("EventSourcing"));
-
         }
 
         public async Task<bool> Commit()

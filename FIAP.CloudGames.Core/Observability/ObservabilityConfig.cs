@@ -1,12 +1,11 @@
-﻿using System.Diagnostics;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Exporter;
+using OpenTelemetry.Instrumentation.Http;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using OpenTelemetry.Instrumentation.AspNetCore;
-using OpenTelemetry.Instrumentation.Http;
+using System.Diagnostics;
 
 namespace FIAP.CloudGames.Core.Observability;
 
@@ -75,7 +74,7 @@ public static class ObservabilityConfig
                 .AddOtlpExporter(o =>
                 {
                     o.Protocol = OtlpExportProtocol.HttpProtobuf;
-                    o.Endpoint = new Uri(tracesEndpoint);   
+                    o.Endpoint = new Uri(tracesEndpoint);
                 }))
                 .WithMetrics(m => m
                 .AddAspNetCoreInstrumentation()

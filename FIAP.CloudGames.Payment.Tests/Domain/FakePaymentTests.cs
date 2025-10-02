@@ -1,5 +1,4 @@
-﻿using System;
-using FIAP.CloudGames.FakePayment;
+﻿using FIAP.CloudGames.FakePayment;
 using FluentAssertions;
 using Xunit;
 
@@ -55,6 +54,5 @@ namespace FIAP.CloudGames.Payment.Tests.Domain
             canceled.Status.Should().Be(TransactionStatus.Cancelled);
             canceled.Amount.Should().Be(100m);
         }
-
     }
 }

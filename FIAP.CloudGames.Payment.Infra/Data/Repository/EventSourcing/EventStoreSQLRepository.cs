@@ -29,7 +29,6 @@ namespace FIAP.CloudGames.Payment.Infra.Data.Repository.EventSourcing
                 var eita = e.Message;
                 throw;
             }
-           
         }
 
         public void Dispose()
