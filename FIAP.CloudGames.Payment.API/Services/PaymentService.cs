@@ -16,17 +16,15 @@ namespace FIAP.CloudGames.Payment.API.Services
     {
         private readonly IPaymentFacade _paymentFacade;
         private readonly IPaymentRepository _paymentRepository;
-        private readonly IMessageBus _bus;
         private readonly IMediatorHandler _mediator;
+        //private readonly IMessageBus _bus;
 
         public PaymentService(IPaymentFacade paymentFacade,
                                 IPaymentRepository paymentRepository,
-                                IMessageBus bus,
                                 IMediatorHandler mediator)
         {
             _paymentFacade = paymentFacade;
             _paymentRepository = paymentRepository;
-            _bus = bus;
             _mediator = mediator;
         }
 
@@ -50,11 +48,12 @@ namespace FIAP.CloudGames.Payment.API.Services
 
                 validationResult.Errors.Add(new ValidationFailure("Pagamento", "Pagamento recusado, entre em contato com a sua operadora de cartão"));
 
-                await _bus.PublishAsync(new PaymentRefusedIntegrationEvent
-                {
-                    OrderId = payment.OrderId,
-                    Reason = "GatewayRefused"
-                });
+                //Futuro
+                //await _bus.PublishAsync(new PaymentRefusedIntegrationEvent
+                //{
+                //    OrderId = payment.OrderId,
+                //    Reason = "GatewayRefused"
+                //});
 
                 return new ResponseMessage(validationResult);
             }
@@ -69,11 +68,12 @@ namespace FIAP.CloudGames.Payment.API.Services
 
                 validationResult.Errors.Add(new ValidationFailure("Pagamento", "Houve um erro ao realizar o pagamento."));
 
-                await _bus.PublishAsync(new PaymentRefusedIntegrationEvent
-                {
-                    OrderId = payment.OrderId,
-                    Reason = "PersistenceFailed"
-                });
+                //Futuro
+                //await _bus.PublishAsync(new PaymentRefusedIntegrationEvent
+                //{
+                //    OrderId = payment.OrderId,
+                //    Reason = "PersistenceFailed"
+                //});
 
                 await _paymentFacade.CancelAuthorization(transaction);
 
@@ -82,7 +82,7 @@ namespace FIAP.CloudGames.Payment.API.Services
 
             await _mediator.PublishAndClearAsync(payment);
 
-            await _bus.PublishAsync(new PaymentAuthorizedIntegrationEvent { OrderId = payment.OrderId });
+            //await _bus.PublishAsync(new PaymentAuthorizedIntegrationEvent { OrderId = payment.OrderId });
 
             Log.Information("Payment authorize success orderId={orderId} paymentId={paymentId} correlationId={cid}", payment.OrderId, payment.Id, cid);
 

@@ -18,14 +18,14 @@ namespace FIAP.CloudGames.Payment.API.Controllers
 
         private readonly IPaymentRepository _paymentRepository;
         private readonly IPaymentService _paymentService;
-        private readonly IMessageBus _bus;
+        //private readonly IMessageBus _bus;
 
         // ENDPOINTS DE TESTS SOMENTE
-        public PaymentController(IPaymentRepository paymentRepository, IPaymentService paymentService, IMessageBus bus)
+        public PaymentController(IPaymentRepository paymentRepository, IPaymentService paymentService)
         {
             _paymentRepository = paymentRepository;
             _paymentService = paymentService;
-            _bus = bus;
+            //_bus = bus;
         }
 
         [HttpGet("payments")]
@@ -36,24 +36,26 @@ namespace FIAP.CloudGames.Payment.API.Controllers
         }
 
         [HttpGet("ThrowFakeOrderProcessingStartedIntegrationEvent")]
-        public IActionResult ThrowOrderProcessingStartedIntegrationEvent()
+        public async Task<IActionResult> ThrowOrderProcessingStartedIntegrationEvent()
         {
             var payment = PaymentTestDataGenerator.GenerateRandomPayment();
 
-            var msg = new OrderStartedIntegrationEvent
-            {
-                OrderId = payment.OrderId,
-                PaymentType = 1,
-                Value = payment.Value,
-                CardName = payment.CreditCard.CardName,
-                CardNumber = payment.CreditCard.CardNumber,
-                CardExpirationDate = payment.CreditCard.ExpirationDate,
-                CvvCard = payment.CreditCard.CVV
-            };
+            var test = await _paymentService.AuthorizePayment(payment);
 
-            Log.Information("HTTP in: publish OrderStartedIntegrationEvent orderId={orderId} value={value} correlationId={cid}", msg.OrderId, msg.Value, LogHelpers.GetCorrelationId());
+            //var msg = new OrderStartedIntegrationEvent
+            //{
+            //    OrderId = payment.OrderId,
+            //    PaymentType = 1,
+            //    Value = payment.Value,
+            //    CardName = payment.CreditCard.CardName,
+            //    CardNumber = payment.CreditCard.CardNumber,
+            //    CardExpirationDate = payment.CreditCard.ExpirationDate,
+            //    CvvCard = payment.CreditCard.CVV
+            //};
 
-            _bus.Publish(msg); // fire-and-forget
+            //Log.Information("HTTP in: publish OrderStartedIntegrationEvent orderId={orderId} value={value} correlationId={cid}", msg.OrderId, msg.Value, LogHelpers.GetCorrelationId());
+
+            //_bus.Publish(msg); // fire-and-forget
 
             return Accepted(new
             {
