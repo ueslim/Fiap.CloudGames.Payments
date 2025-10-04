@@ -48,7 +48,10 @@ namespace FIAP.CloudGames.Payment.API.Configuration
         {
             app.Use(async (ctx, next) =>
             {
-                using (Serilog.Context.LogContext.PushProperty("user_id", ctx.User?.FindFirst("sub")?.Value))
+                var cid = ctx.Request.Headers["X-Correlation-Id"].ToString();
+                if (string.IsNullOrWhiteSpace(cid)) cid = ctx.TraceIdentifier;
+
+                using (Serilog.Context.LogContext.PushProperty("correlation_id", cid))
                 {
                     await next();
                 }

@@ -1,0 +1,44 @@
+﻿using FIAP.CloudGames.Core.Data;
+using FIAP.CloudGames.Core.Events;
+using FIAP.CloudGames.Core.Messages;
+using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
+using Models = FIAP.CloudGames.Payment.Domain.Models;
+
+namespace FIAP.CloudGames.Payment.Infra.Data
+{
+    public sealed class PaymentContext : DbContext, IUnitOfWork
+    {
+        public PaymentContext(DbContextOptions<PaymentContext> options)
+            : base(options)
+        {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
+        }
+
+        public DbSet<Models.Payment> Payments { get; set; }
+        public DbSet<Models.Transaction> Transactions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("payment");
+            modelBuilder.Ignore<ValidationResult>();
+            modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<StoredEvent>();
+
+            foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
+                e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
+                property.SetColumnType("varchar(100)");
+
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes()
+                .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaymentContext).Assembly, t => t.Namespace != null && !t.Namespace.Contains("EventSourcing"));
+        }
+
+        public async Task<bool> Commit()
+        {
+            return await SaveChangesAsync() > 0;
+        }
+    }
+}

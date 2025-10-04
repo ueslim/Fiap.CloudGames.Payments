@@ -4,7 +4,7 @@ namespace FIAP.CloudGames.Payment.API.Services
 {
     public interface IPaymentService
     {
-        Task<ResponseMessage> AuthorizePayment(Models.Payment payment);
+        Task<ResponseMessage> AuthorizePayment(Domain.Models.Payment payment);
 
         Task<ResponseMessage> CapturePayment(Guid orderId);
 

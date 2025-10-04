@@ -1,5 +1,6 @@
 ﻿using FIAP.CloudGames.FakePayment;
 using Microsoft.Extensions.Options;
+using Models = FIAP.CloudGames.Payment.Domain.Models;
 
 namespace FIAP.CloudGames.Payment.API.Facade
 {
@@ -14,8 +15,7 @@ namespace FIAP.CloudGames.Payment.API.Facade
 
         public async Task<Models.Transaction> AuthorizePayment(Models.Payment payment)
         {
-            var fakePaymentService = new FakePaymentService(_paymentConfig.DefaultApiKey,
-                _paymentConfig.DefaultEncryptionKey);
+            var fakePaymentService = new FakePaymentService(_paymentConfig.DefaultApiKey, _paymentConfig.DefaultEncryptionKey);
 
             var cardHashGen = new CardHash(fakePaymentService)
             {

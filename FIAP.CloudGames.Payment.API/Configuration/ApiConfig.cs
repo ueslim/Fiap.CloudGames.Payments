@@ -1,6 +1,7 @@
-﻿using FIAP.CloudGames.Payment.API.Data;
-using FIAP.CloudGames.Payment.API.Facade;
+﻿using FIAP.CloudGames.Payment.API.Facade;
+using FIAP.CloudGames.Payment.Infra.Data;
 using FIAP.CloudGames.WebAPI.Core.Identity;
+using FIAP.CloudGames.WebAPI.Core.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 namespace FIAP.CloudGames.Payment.API.Configuration
@@ -12,6 +13,10 @@ namespace FIAP.CloudGames.Payment.API.Configuration
             services.AddDbContext<PaymentContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                 sql => sql.MigrationsHistoryTable("__EFMigrationsHistory_Payment", "dbo")));
+
+            services.AddDbContext<EventStoreSqlContext>(options =>
+               options.UseSqlServer(configuration.GetConnectionString("EventStoreConnection"),
+               sql => sql.MigrationsHistoryTable("__EFMigrationsHistory_EventStore", "dbo")));
 
             services.AddControllers(options =>
             {
@@ -39,6 +44,8 @@ namespace FIAP.CloudGames.Payment.API.Configuration
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCorrelationId();
 
             app.UseRouting();
 

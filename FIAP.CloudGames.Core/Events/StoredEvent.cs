@@ -1,6 +1,4 @@
-﻿
-
-using FIAP.CloudGames.Core.Messages;
+﻿using FIAP.CloudGames.Core.Messages;
 
 namespace FIAP.CloudGames.Core.Events
 {
@@ -16,7 +14,8 @@ namespace FIAP.CloudGames.Core.Events
         }
 
         // EF Constructor
-        protected StoredEvent() { }
+        protected StoredEvent()
+        { }
 
         public Guid Id { get; private set; }
 

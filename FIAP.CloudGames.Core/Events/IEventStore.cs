@@ -1,6 +1,4 @@
-﻿
-
-using FIAP.CloudGames.Core.Messages;
+﻿using FIAP.CloudGames.Core.Messages;
 
 namespace FIAP.CloudGames.Core.Events
 {
