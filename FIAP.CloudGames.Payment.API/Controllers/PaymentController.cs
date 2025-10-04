@@ -1,16 +1,13 @@
-﻿using FIAP.CloudGames.Core.Messages.Integration;
-using FIAP.CloudGames.Core.Observability;
-using FIAP.CloudGames.MessageBus;
-using FIAP.CloudGames.Payment.API.Services;
+﻿using FIAP.CloudGames.Payment.API.Services;
 using FIAP.CloudGames.Payment.API.Utils;
 using FIAP.CloudGames.Payment.Domain.Models;
 using FIAP.CloudGames.WebAPI.Core.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
 namespace FIAP.CloudGames.Payment.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class PaymentController : MainController
     {
         // Não haverá endpoints pois a comunicação com Payment será feita através de integration event messages
